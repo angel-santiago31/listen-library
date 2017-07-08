@@ -7,7 +7,7 @@ use yii\base\Model;
 /**
  * Login form
  */
-class LoginForm extends Model
+class AdminLoginForm extends Model
 {
     public $email;
     public $password;
@@ -70,7 +70,7 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Customer::findByEmail($this->email);
+            $this->_user = Admin::findByEmail($this->email);
         }
 
         return $this->_user;

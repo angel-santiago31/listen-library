@@ -16,6 +16,29 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`listen_library` /*!40100 DEFAULT CHARAC
 
 USE `listen_library`;
 
+/*Table structure for table `admin` */
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `password_reset_token` (`password_reset_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `admin` */
+
+insert  into `admin`(`id`,`auth_key`,`password_hash`,`password_reset_token`,`email`,`status`,`created_at`,`updated_at`) values 
+(7,'h6hzPIPBPEl7_cx7gMQlI7lO-ytyuEbh','$2y$13$/Ju6PbQWPgitJlP84Hnqxuu3CHPLmnmL7tXCs5wLeJIIlDA0b953i','','admin@admin.com',10,1499473607,1499473607);
+
 /*Table structure for table `audiobook` */
 
 DROP TABLE IF EXISTS `audiobook`;
@@ -97,13 +120,37 @@ CREATE TABLE `customer` (
   `last_name` varchar(18) NOT NULL COMMENT 'Last Name',
   `initial` char(1) DEFAULT NULL COMMENT 'Initial',
   `age` int(11) NOT NULL COMMENT 'Age',
-  `email` varchar(64) NOT NULL COMMENT 'E-mail',
+  `email` varchar(255) NOT NULL COMMENT 'E-mail',
   `phone_number_1` int(10) NOT NULL COMMENT 'Primary Phone Number',
   `phone_number_2` int(10) DEFAULT NULL COMMENT 'Secondary Phone Number(Optional)',
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
+
+insert  into `customer`(`id`,`first_name`,`last_name`,`initial`,`age`,`email`,`phone_number_1`,`phone_number_2`,`auth_key`,`password_hash`,`status`,`created_at`,`updated_at`) values 
+(1,'','',NULL,0,'hikaricio@gmail.com',0,NULL,'h6hzPIPBPEl7_cx7gMQlI7lO-ytyuEbh','$2y$13$/Ju6PbQWPgitJlP84Hnqxuu3CHPLmnmL7tXCs5wLeJIIlDA0b953i',10,1499473607,1499473607);
+
+/*Table structure for table `migration` */
+
+DROP TABLE IF EXISTS `migration`;
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `migration` */
+
+insert  into `migration`(`version`,`apply_time`) values 
+('m000000_000000_base',1499472031),
+('m130524_201442_init',1499472038);
 
 /*Table structure for table `narrator` */
 
@@ -151,6 +198,28 @@ CREATE TABLE `publisher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `publisher` */
+
+/*Table structure for table `user` */
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `password_reset_token` (`password_reset_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `user` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
