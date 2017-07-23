@@ -18,8 +18,9 @@ class AudiobookSearch extends Audiobook
     public function rules()
     {
         return [
-            [['id', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'release_date', 'publisher_id'], 'integer'],
-            [['title', 'length'], 'safe'],
+            [['id', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'release_date', 'publisher_id', 'active'], 'integer'],
+            [['title', 'length', 'picture', 'summary'], 'safe'],
+            [['price', 'cost'], 'number'],
         ];
     }
 
@@ -66,10 +67,15 @@ class AudiobookSearch extends Audiobook
             'narrator_id' => $this->narrator_id,
             'release_date' => $this->release_date,
             'publisher_id' => $this->publisher_id,
+            'price' => $this->price,
+            'cost' => $this->cost,
+            'active' => $this->active,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'length', $this->length]);
+            ->andFilterWhere(['like', 'length', $this->length])
+            ->andFilterWhere(['like', 'picture', $this->picture])
+            ->andFilterWhere(['like', 'summary', $this->summary]);
 
         return $dataProvider;
     }

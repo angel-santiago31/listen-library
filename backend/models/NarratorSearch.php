@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Author;
+use backend\models\Narrator;
 
 /**
- * AuthorSearch represents the model behind the search form about `backend\models\Author`.
+ * NarratorSearch represents the model behind the search form about `backend\models\Narrator`.
  */
-class AuthorSearch extends Author
+class NarratorSearch extends Narrator
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class AuthorSearch extends Author
      */
     public function search($params)
     {
-        $query = Author::find();
+        $query = Narrator::find();
 
         // add conditions that should always apply here
 

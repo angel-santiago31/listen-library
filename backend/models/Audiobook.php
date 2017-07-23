@@ -16,6 +16,11 @@ use Yii;
  * @property string $length
  * @property integer $release_date
  * @property integer $publisher_id
+ * @property double $price
+ * @property double $cost
+ * @property string $picture
+ * @property string $summary
+ * @property integer $active
  *
  * @property Author $author
  * @property Narrator $narrator
@@ -38,10 +43,13 @@ class Audiobook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id'], 'required'],
-            [['genre', 'is_fiction', 'author_id', 'narrator_id', 'release_date', 'publisher_id'], 'integer'],
+            [['title', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id', 'price', 'cost', 'picture', 'summary'], 'required'],
+            [['genre', 'is_fiction', 'author_id', 'narrator_id', 'publisher_id', 'active'], 'integer'],
+            ['release_date', 'safe'],
+            [['price', 'cost'], 'number'],
             [['title'], 'string', 'max' => 64],
             [['length'], 'string', 'max' => 18],
+            [['picture', 'summary'], 'string', 'max' => 256],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::className(), 'targetAttribute' => ['author_id' => 'id']],
             [['narrator_id'], 'exist', 'skipOnError' => true, 'targetClass' => Narrator::className(), 'targetAttribute' => ['narrator_id' => 'id']],
             [['publisher_id'], 'exist', 'skipOnError' => true, 'targetClass' => Publisher::className(), 'targetAttribute' => ['publisher_id' => 'id']],
@@ -54,15 +62,20 @@ class Audiobook extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Audiobook Id',
+            'id' => 'ID',
             'title' => 'Title',
             'genre' => 'Genre',
-            'is_fiction' => 'Is Fiction?',
-            'author_id' => 'Author Id',
-            'narrator_id' => 'Narrator Id',
+            'is_fiction' => 'Is Fiction',
+            'author_id' => 'Author ID',
+            'narrator_id' => 'Narrator ID',
             'length' => 'Length',
             'release_date' => 'Release Date',
-            'publisher_id' => 'Publisher Id',
+            'publisher_id' => 'Publisher ID',
+            'price' => 'Price',
+            'cost' => 'Cost',
+            'picture' => 'Picture',
+            'summary' => 'Summary',
+            'active' => 'Active',
         ];
     }
 

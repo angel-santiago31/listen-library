@@ -33,6 +33,16 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'publisher_id') ?>
 
+    <?php // echo $form->field($model, 'price') ?>
+
+    <?php // echo $form->field($model, 'cost') ?>
+
+    <?php // echo $form->field($model, 'picture') ?>
+
+    <?php // echo $form->field($model, 'summary') ?>
+
+    <?php // echo $form->field($model, 'active') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

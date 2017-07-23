@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\NarratorrSearch */
+/* @var $searchModel backend\models\NarratorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Narrators';
@@ -25,9 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'first_name',
-            'last_name',
-            'initial',
+            'name',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

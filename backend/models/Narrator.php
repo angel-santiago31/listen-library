@@ -8,9 +8,7 @@ use Yii;
  * This is the model class for table "narrator".
  *
  * @property integer $id
- * @property string $first_name
- * @property string $last_name
- * @property string $initial
+ * @property string $name
  *
  * @property Audiobook[] $audiobooks
  */
@@ -30,9 +28,8 @@ class Narrator extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name'], 'required'],
-            [['first_name', 'last_name'], 'string', 'max' => 18],
-            [['initial'], 'string', 'max' => 1],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 18],
         ];
     }
 
@@ -42,10 +39,8 @@ class Narrator extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Narrator Id',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'initial' => 'Initial',
+            'id' => 'ID',
+            'name' => 'Name',
         ];
     }
 

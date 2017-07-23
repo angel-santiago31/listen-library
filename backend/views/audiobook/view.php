@@ -37,6 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'length',
             'release_date',
             'publisher_id',
+            'price',
+            'cost',
+            'picture',
+            'summary',
+            'active',
         ],
     ]) ?>
 

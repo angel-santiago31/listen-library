@@ -3,16 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Narrator;
-use backend\models\NarratorSearch;
+use common\models\Customer;
+use common\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\SignupForm;
 
 /**
- * NarratorController implements the CRUD actions for Narrator model.
+ * CustomerController implements the CRUD actions for Customer model.
  */
-class NarratorController extends Controller
+class CustomerController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +31,12 @@ class NarratorController extends Controller
     }
 
     /**
-     * Lists all Narrator models.
+     * Lists all Customer models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NarratorSearch();
+        $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +46,7 @@ class NarratorController extends Controller
     }
 
     /**
-     * Displays a single Narrator model.
+     * Displays a single Customer model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +58,16 @@ class NarratorController extends Controller
     }
 
     /**
-     * Creates a new Narrator model.
+     * Creates a new Customer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Narrator();
+        $model = new SignupForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            return $this->redirect(['customer/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +76,7 @@ class NarratorController extends Controller
     }
 
     /**
-     * Updates an existing Narrator model.
+     * Updates an existing Customer model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,7 +95,7 @@ class NarratorController extends Controller
     }
 
     /**
-     * Deletes an existing Narrator model.
+     * Deletes an existing Customer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +108,15 @@ class NarratorController extends Controller
     }
 
     /**
-     * Finds the Narrator model based on its primary key value.
+     * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Narrator the loaded model
+     * @return Customer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Narrator::findOne($id)) !== null) {
+        if (($model = Customer::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

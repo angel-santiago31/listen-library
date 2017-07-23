@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Narrator */
 
-$this->title = 'Update Narrator: ' . $model->id;
+$this->title = 'Update Narrator: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Narrators', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="narrator-update">
