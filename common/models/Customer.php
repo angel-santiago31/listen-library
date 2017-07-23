@@ -53,6 +53,11 @@ class Customer extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['first_name', 'last_name', 'age', 'email', 'phone_number_1'], 'required'],
+            [['phone_number_1', 'phone_number_2'], 'integer'],
+            [['first_name', 'last_name', 'age'], 'string', 'max' => 18],
+            [['initial'], 'string', 'max' => 1],
+            [['email'], 'string', 'max' => 255],
         ];
     }
 

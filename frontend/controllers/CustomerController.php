@@ -8,6 +8,7 @@ use common\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\CreditCard;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Customer */
 
-$this->title = $model->id;
+$this->title = $model->first_name . ' ' . $model->last_name;
 $this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'first_name',
             'last_name',
             'initial',
@@ -36,11 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'phone_number_1',
             'phone_number_2',
-            'auth_key',
-            'password_hash',
-            'status',
-            'created_at',
-            'updated_at',
+            //'auth_key',
+            //'password_hash',
+            //'status',
+            //'created_at',
+            //'updated_at',
         ],
     ]) ?>
 
