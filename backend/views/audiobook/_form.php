@@ -8,6 +8,7 @@ use backend\models\Narrator;
 use backend\models\Publisher;
 use backend\models\Genre;
 use yii\widgets\MaskedInput;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Audiobook */
@@ -34,7 +35,17 @@ use yii\widgets\MaskedInput;
 
     <?= $form->field($model, 'length')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'release_date')->widget(MaskedInput::className(),['mask' => '99-99-99', 'clientOptions' =>['removeMaskOnSubmit'=> true]])->textInput(['placeholder' => "mm-dd-yy"]) ?>
+    <?= $form->field($model, 'release_date')->widget(
+    DatePicker::className(), [
+        // inline too, not bad
+         'inline' => true,
+         // modify template for custom rendering
+        'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'M-dd-yyyy'
+        ]
+]);?>
 
     <?= $form->field($model, 'publisher_id')->dropDownList(ArrayHelper::map(Publisher::find()
                                              ->select(['id', 'name'])->asArray()->all(),'id','name'), ['prompt'=>'--Select--']);?>

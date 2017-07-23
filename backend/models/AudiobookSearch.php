@@ -18,8 +18,8 @@ class AudiobookSearch extends Audiobook
     public function rules()
     {
         return [
-            [['id', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'release_date', 'publisher_id', 'active'], 'integer'],
-            [['title', 'length', 'picture', 'summary'], 'safe'],
+            [['id', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'publisher_id', 'active'], 'integer'],
+            [['title', 'length', 'picture', 'summary', 'release_date'], 'safe'],
             [['price', 'cost'], 'number'],
         ];
     }
