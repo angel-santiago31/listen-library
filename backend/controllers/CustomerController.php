@@ -110,9 +110,23 @@ class CustomerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        // $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->status = 0;
+        $model->save(false);
 
         return $this->redirect(['index']);
+    }
+
+    public function actionRestore($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 10;
+        $model->save(false);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     /**

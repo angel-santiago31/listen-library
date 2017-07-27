@@ -1,5 +1,5 @@
 /*
-SQLyog Community v12.4.1 (64 bit)
+SQLyog Community v12.4.3 (64 bit)
 MySQL - 10.1.21-MariaDB : Database - listen_library
 *********************************************************************
 */
@@ -32,15 +32,12 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `admin` */
 
 insert  into `admin`(`id`,`auth_key`,`password_hash`,`password_reset_token`,`email`,`status`,`created_at`,`updated_at`) values 
-(7,'h6hzPIPBPEl7_cx7gMQlI7lO-ytyuEbh','$2y$13$LAj73a9INVFjhm7eLz.S9u4kJmjzOIMLyESaKyezltAZ9m4ZP8EAG','','admin@admin.com',10,1499473607,1499473607),
-(8,'Q6lAVYuV2wnnMPx9zbBWhEoFufPfGufi','$2y$13$MOmfMR8pKFmTO9XmBVTe0.png9k2/u2AYDbHVgK.rGD1T/MFIKY8q','IkZeg4yVB4D4PmXFuv9TXOrfsTZ6oPX9_1500831232','angel@admin.com',10,1500831232,1500831232),
-(9,'m96RwkY1f-MPPL9WXRHwjwqo0k2A4LrM','$2y$13$sG7xhzoikWpoeKYYhgivn.HnIxfLZ4MvgFMsTm1yeFPi9GdXzUV7u','mx5MVl0tavqx_j5k9tr70aSpswPTf-D7_1500831303','samuel@admin.com',10,1500831303,1500831303),
-(10,'r7I4eiGhFOaUcba1mDrTb381KDCxavXv','admin1','fRmHNyd3BLCphejkrsVvToKCf-rgVKzj_1500836910','pepe.pollo@admin.com',10,1500836910,1500836995);
+(11,'5RrSqB7TSdA4adsz3YwuO199zllvrlNI','$2y$13$9fAJ0luQ7GcMcoyc9bZtM.LG2M/NJa0n4pBDtvs8ZFdHzkdqgb8lm','crIxZKYBsipcpWcYHkjk3qEUv95tjavk_1501170550','samuel.reyes@listen-library.com',10,1501170550,1501196897);
 
 /*Table structure for table `audiobook` */
 
@@ -151,8 +148,8 @@ CREATE TABLE `customer` (
 /*Data for the table `customer` */
 
 insert  into `customer`(`id`,`first_name`,`last_name`,`initial`,`age`,`email`,`phone_number_1`,`phone_number_2`,`auth_key`,`password_hash`,`status`,`created_at`,`updated_at`) values 
-(5,'Test','Customer','T','18-25','customer@customer.com',9999999999,NULL,'zMj3GB-2trtNEuXxaSRoWgD3MMXZJgu3','$2y$13$8lAzC0dsCapPyO5qmWyiwuDSrtbss6iFBwr80HeCHasvNIMWx0hDG',10,1499611547,1499611547),
-(6,'Samuel','Reyes','J','18-25','samuel@customer.com',9999999999,NULL,'vlP5BGL0bMUEulXhlPWqBUx5c4cfLKou','$2y$13$LAj73a9INVFjhm7eLz.S9u4kJmjzOIMLyESaKyezltAZ9m4ZP8EAG',10,1500827281,1500827281),
+(5,'Test','Customer','T','18-25','customer@customer.com',9999999999,NULL,'zMj3GB-2trtNEuXxaSRoWgD3MMXZJgu3','$2y$13$8lAzC0dsCapPyO5qmWyiwuDSrtbss6iFBwr80HeCHasvNIMWx0hDG',10,1499611547,1501195299),
+(6,'Samuel','Reyes','J','18-25','samuel@customer.com',9999999999,NULL,'vlP5BGL0bMUEulXhlPWqBUx5c4cfLKou','$2y$13$LAj73a9INVFjhm7eLz.S9u4kJmjzOIMLyESaKyezltAZ9m4ZP8EAG',10,1500827281,1501195497),
 (7,'jhggjg','kjbjkg','e','18-25','sammy@customer.com',9999999999,NULL,'LE2pnJPYjepljwBzI62UeYOiJHeF0TDT','$2y$13$uysDfsU/ik7i3ADxpniFbu12WlxU27Z5sKM0EgS5CBo2lPcg0Ss6y',10,1500830217,1500830217),
 (8,'Customer','Customer','C','26-30','customer1@customer.com',9999999999,9999999999,'V0OBY_XACcEBfLT7VoAZsfXtMXSub2GC','$2y$13$r9Si9.g0VA9mZWWNSP7rtOwvdh/ejJOB8ecc5QQOOEHTaRAlihQxi',10,1500836751,1500836877);
 

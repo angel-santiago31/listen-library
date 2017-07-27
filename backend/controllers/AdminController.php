@@ -109,12 +109,26 @@ class AdminController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+     public function actionDelete($id)
+     {
+         // $this->findModel($id)->delete();
+         $model = $this->findModel($id);
+         $model->status = 0;
+         $model->save(false);
 
-        return $this->redirect(['index']);
-    }
+         return $this->redirect(['index']);
+     }
+
+     public function actionRestore($id)
+     {
+         $model = $this->findModel($id);
+         $model->status = 10;
+         $model->save(false);
+
+         return $this->render('view', [
+             'model' => $model,
+         ]);
+     }
 
     /**
      * Finds the Admin model based on its primary key value.

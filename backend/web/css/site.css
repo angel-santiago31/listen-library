@@ -118,3 +118,46 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.my-navbar {
+    background-color: #f4511e;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.logout {
+    color: white;
+}
+
+.navbar-toggle {
+    color: white;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #f4511e;
+}
+
+a:hover, a:focus {
+    color: #a6a6a6;
+    text-decoration: underline;
+}
+
+a {
+    color: #f4511e;
+    text-decoration: none;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background-color: #f4511e;
+    border-color: #337ab7;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+}

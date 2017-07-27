@@ -29,22 +29,44 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => '<i class="glyphicon glyphicon-headphones"></i> Listen Library',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'my-navbar navbar-fixed-top',
+            'style' => 'color: white'
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => '<i class="glyphicon glyphicon-log-in"></i> Login', 'url' => ['/site/login']];
     } else {
+        $menuItems = [
+            ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['style' => 'color: white']],
+        ];
+        $menuItems[] = ['label' => 'Accounts',
+                        'items' => [
+                            ['label' => 'Cutomers', 'url' => ['/customer/index'], 'linkOptions' => ['style' => 'color: black']],
+                            '<li class="divider"></li>',
+                            ['label' => 'Admins', 'url' => ['/admin/index'], 'linkOptions' => ['style' => 'color: black']],
+                        ],
+                        'linkOptions' => ['style' => 'color: white']
+                  ];
+        $menuItems[] = ['label' => 'Audiobooks',
+                        'items' => [
+                            ['label' => 'Titles', 'url' => ['/audiobook/index'], 'linkOptions' => ['style' => 'color: black']],
+                            '<li class="divider"></li>',
+                            ['label' => 'Authors', 'url' => ['/author/index'], 'linkOptions' => ['style' => 'color: black']],
+                            '<li class="divider"></li>',
+                            ['label' => 'Narrators', 'url' => ['/narrator/index'], 'linkOptions' => ['style' => 'color: black']],
+                            '<li class="divider"></li>',
+                            ['label' => 'Publishers', 'url' => ['/order/index'], 'linkOptions' => ['style' => 'color: black']],
+                        ],
+                        'linkOptions' => ['style' => 'color: white']
+                  ];
+        $menuItems[] = ['label' => 'Orders', 'url' => ['/order/index'], 'linkOptions' => ['style' => 'color: white']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->email . ')',
+                '<i class="glyphicon glyphicon-off"></i>',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -53,6 +75,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
+        'encodeLabels' => false,
     ]);
     NavBar::end();
     ?>
