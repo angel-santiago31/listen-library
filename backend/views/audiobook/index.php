@@ -12,22 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="audiobook-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) . ":" ?> <?= Html::a('Add Audiobook', ['create'], ['class' => 'btn btn-link']) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Audiobook', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
             'genre',
-            'is_fiction',
+            //'is_fiction',
             'author_id',
             // 'narrator_id',
             // 'length',
@@ -37,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'cost',
             // 'picture',
             // 'summary',
-            // 'active',
+            'active',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

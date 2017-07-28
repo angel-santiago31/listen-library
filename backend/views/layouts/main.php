@@ -37,7 +37,7 @@ AppAsset::register($this);
         ],
     ]);
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => '<i class="glyphicon glyphicon-log-in"></i> Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => '<i class="glyphicon glyphicon-log-in"></i> Login', 'url' => ['/site/login'], 'linkOptions' => ['style' => 'color: white']];
     } else {
         $menuItems = [
             ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['style' => 'color: white']],

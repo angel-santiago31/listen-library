@@ -10,32 +10,34 @@ use yii\grid\GridView;
 $this->title = 'Customers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="customer-index">
+<div class="container">
+    <div class="row">
+        <h1><?= Html::encode($this->title) . ":" ?> <?= Html::a('Add Customer', ['create'], ['class' => 'btn btn-link']) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    </div>
+    <div class="row">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                //['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) . ":" ?> <?= Html::a('Add Customer', ['create'], ['class' => 'btn btn-link']) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                'id',
+                //'first_name',
+                //'last_name',
+                //'initial',
+                //'age',
+                'email:email',
+                // 'phone_number_1',
+                // 'phone_number_2',
+                // 'auth_key',
+                // 'password_hash',
+                'status',
+                // 'created_at',
+                // 'updated_at',
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            //'first_name',
-            //'last_name',
-            //'initial',
-            //'age',
-            'email:email',
-            // 'phone_number_1',
-            // 'phone_number_2',
-            // 'auth_key',
-            // 'password_hash',
-            'status',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
 </div>
