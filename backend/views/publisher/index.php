@@ -10,24 +10,23 @@ use yii\grid\GridView;
 $this->title = 'Publishers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="publisher-index">
+<div class="container">
+    <div class="row">
+        <h1><?= Html::encode($this->title) . ":" ?> <?= Html::a('Add Publisher', ['create'], ['class' => 'btn btn-link']) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    </div>
+    <div class="row">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                //['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                'id',
+                'name',
 
-    <p>
-        <?= Html::a('Create Publisher', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
 </div>

@@ -32,7 +32,7 @@ AppAsset::register($this);
         'brandLabel' => '<i class="glyphicon glyphicon-headphones"></i> Listen Library',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'my-navbar navbar-fixed-top',
+            'class' => 'my-navbar navbar-fixed-top navbar-default',
             'style' => 'color: white'
         ],
     ]);
@@ -58,7 +58,7 @@ AppAsset::register($this);
                             '<li class="divider"></li>',
                             ['label' => 'Narrators', 'url' => ['/narrator/index'], 'linkOptions' => ['style' => 'color: black']],
                             '<li class="divider"></li>',
-                            ['label' => 'Publishers', 'url' => ['/order/index'], 'linkOptions' => ['style' => 'color: black']],
+                            ['label' => 'Publishers', 'url' => ['/publisher/index'], 'linkOptions' => ['style' => 'color: black']],
                         ],
                         'linkOptions' => ['style' => 'color: white']
                   ];

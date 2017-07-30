@@ -104,8 +104,6 @@ class CreditCardController extends Controller
      */
     public function actionDelete($id, $card_last_digits)
     {
-        $this->findModel($id, $card_last_digits)->delete();
-
         return $this->redirect(['index']);
     }
 

@@ -7,41 +7,47 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Customer */
 
 $this->title = $model->first_name . ' ' . $model->last_name;
-$this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="customer-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            //'id',
-            'first_name',
-            'last_name',
-            'initial',
-            'age',
-            'email:email',
-            'phone_number_1',
-            'phone_number_2',
-            //'auth_key',
-            //'password_hash',
-            //'status',
-            //'created_at',
-            //'updated_at',
-        ],
-    ]) ?>
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1><?= Html::encode($this->title) . ": " ?> <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-link']) ?></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    //'id',
+                    'first_name',
+                    'last_name',
+                    'initial',
+                    'age',
+                    'email:email',
+                    'phone_number_1',
+                    'phone_number_2',
+                    //'auth_key',
+                    //'password_hash',
+                    //'status',
+                    //'created_at',
+                    //'updated_at',
+                ],
+            ]) ?>
+        </div>
+        <div class="col-sm-5">
+            <?= DetailView::widget([
+                'model' => $card,
+                'attributes' => [
+                    //'id',
+                    //'customer_id',
+                    'card_last_digits',
+                    'expiration_date',
+                    'card_type'
+                ],
+            ]) ?>
+        </div>
+    </div>
 </div>

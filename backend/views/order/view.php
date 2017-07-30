@@ -10,32 +10,23 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="order-view">
+<div class="container">
+    <div class="row">
+        <h1><?= Html::encode($this->title) . ":" ?> <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-link']) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+    </div>
+    <div class="row">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'item_quantity',
+                'date',
+                'status',
+                'customer_id',
+                'card_last_digits',
+                'price_total',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'item_quantity',
-            'date',
-            'status',
-            'customer_id',
-            'card_last_digits',
-            'price_total',
-        ],
-    ]) ?>
-
+    </div>
 </div>

@@ -32,39 +32,27 @@ AppAsset::register($this);
         'brandLabel' => '<i class="glyphicon glyphicon-headphones"></i> Listen Library',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'my-navbar navbar-fixed-top navbar-default',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['style' => 'color: white']],
+        ['label' => 'About', 'url' => ['/site/about'], 'linkOptions' => ['style' => 'color: white']],
+        ['label' => 'Contact', 'url' => ['/site/contact'], 'linkOptions' => ['style' => 'color: white']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup'], 'linkOptions' => ['style' => 'color: white']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login'], 'linkOptions' => ['style' => 'color: white']];
     } else {
-        $menuItems[] = ['label' => '<i class="glyphicon glyphicon-user"></i>',
-            'items' => [
-                ['label' => '<li class="text-center">'
-                . Html::beginForm(['/customer/view', 'id' => Yii::$app->user->identity->id])
-                . Html::submitButton(
-                    '<i class="glyphicon glyphicon-user"></i> My Account',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>' . '<li class="divider">|</li>'
-                ],
-                ['label' => '<li class="text-center">'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    '<i class="glyphicon glyphicon-log-out"></i> Logout',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>']
-            ]
-        ];
+        $menuItems[] = ['label' => 'My Account', 'url' => ['/customer/view', 'id' => Yii::$app->user->identity->id], 'linkOptions' => ['style' => 'color: white']];
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                '<i class="glyphicon glyphicon-off"></i>',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>';
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

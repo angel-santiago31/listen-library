@@ -10,39 +10,29 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Audiobooks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="audiobook-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+<div class="container">
+    <div class="row">
+        <h1><?= Html::encode($this->title) ?> <?= Html::a('Activate', ['restore', 'id' => $model->id], ['class' => 'btn btn-link']) ?></h1>
+    </div>
+    <div class="row">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'title',
+                'genre',
+                'is_fiction',
+                'author_id',
+                'narrator_id',
+                'length',
+                'release_date',
+                'publisher_id',
+                'price',
+                'cost',
+                'picture',
+                'summary',
+                'active',
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title',
-            'genre',
-            'is_fiction',
-            'author_id',
-            'narrator_id',
-            'length',
-            'release_date',
-            'publisher_id',
-            'price',
-            'cost',
-            'picture',
-            'summary',
-            'active',
-        ],
-    ]) ?>
-
+    </div>
 </div>

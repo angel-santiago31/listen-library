@@ -5,10 +5,10 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Customer;
 use common\models\CustomerSearch;
+use backend\models\CreditCard;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\models\CreditCard;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -54,6 +54,7 @@ class CustomerController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'card' => $this->findCreditCard($id)
         ]);
     }
 
@@ -84,12 +85,14 @@ class CustomerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $card = $this->findCreditCard($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (($model->load(Yii::$app->request->post()) && $model->save()) && ($card->load(Yii::$app->request->post()) && $card->save())) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'card' => $card
             ]);
         }
     }
@@ -117,6 +120,15 @@ class CustomerController extends Controller
     protected function findModel($id)
     {
         if (($model = Customer::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findCreditCard($id)
+    {
+        if (($model = CreditCard::find()->where(['customer_id' => $id])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

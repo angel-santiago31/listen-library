@@ -123,11 +123,11 @@ a.desc:after {
     background-color: #f4511e;
 }
 
-.navbar-brand {
+.navbar-default .navbar-brand {
     color: white;
 }
 
-.logout {
+.navbar-default .btn-link {
     color: white;
 }
 
@@ -137,7 +137,7 @@ a.desc:after {
 
 .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
-    background-color: #f4511e;
+    background-color: #f6673c;
 }
 
 a:hover, a:focus {
@@ -151,7 +151,7 @@ a {
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-    background-color: #f4511e;
+    background-color: #f6673c;
     border-color: #337ab7;
 }
 
@@ -160,4 +160,25 @@ a {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     text-align: center;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #f6673c;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #f6673c;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #f6673c;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: #f6673c;
 }
