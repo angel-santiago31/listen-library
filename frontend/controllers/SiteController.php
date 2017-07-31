@@ -13,6 +13,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use backend\models\CreditCard;
+use backend\models\Audiobook;
+use backend\models\AudiobookSearch;
 
 /**
  * Site controller
@@ -71,10 +73,26 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+     public function actionIndex($title = NULL)
+     {
+        $model = new Audiobook();
+
+        if ($model->load(Yii::$app->request->post()) && $title == NULL) {
+            $audiobookList = Audiobook::find()->where(['active' => Audiobook::STATUS_ACTIVE, 'title' => $model->title])->all();
+
+            return $this->render('index', [
+               'model' => $model,
+               'audiobookList' => $audiobookList,
+            ]);
+        }
+
+        $audiobookList = Audiobook::find()->where(['active' => Audiobook::STATUS_ACTIVE])->all();
+
+        return $this->render('index', [
+           'model' => $model,
+           'audiobookList' => $audiobookList,
+        ]);
+     }
 
     /**
      * Logs in a user.

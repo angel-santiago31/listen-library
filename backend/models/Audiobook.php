@@ -3,7 +3,8 @@
 namespace backend\models;
 
 use Yii;
-
+use backend\models\Author;
+use backend\models\Genre;
 /**
  * This is the model class for table "audiobook".
  *
@@ -29,6 +30,9 @@ use Yii;
  */
 class Audiobook extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+
     /**
      * @inheritdoc
      */
@@ -43,9 +47,9 @@ class Audiobook extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id', 'price', 'cost', 'picture', 'summary'], 'required'],
+            [['genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id', 'price', 'cost', 'picture', 'summary'], 'required'],
             [['genre', 'is_fiction', 'author_id', 'narrator_id', 'publisher_id', 'active'], 'integer'],
-            ['release_date', 'safe'],
+            [['release_date', 'title'], 'safe'],
             [['price', 'cost'], 'number'],
             [['title'], 'string', 'max' => 64],
             [['length'], 'string', 'max' => 18],
@@ -109,5 +113,19 @@ class Audiobook extends \yii\db\ActiveRecord
     public function getContains()
     {
         return $this->hasMany(Contains::className(), ['audiobook_id' => 'id']);
+    }
+
+    public function getAuthorName()
+    {
+        $author = Author::find()->where(['id' => $this->author_id])->one();
+
+        return $author->name;
+    }
+
+    public function getGenreName()
+    {
+        $genre = Genre::find()->where(['id' => $this->genre])->one();
+
+        return $genre->genre;
     }
 }

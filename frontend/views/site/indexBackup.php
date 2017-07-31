@@ -38,22 +38,7 @@ $this->title = 'Welcome to our catalog!';
           <?php  endif ?>
           <ul class="list-group">
             <?php foreach($audiobookList as $audiobook): ?>
-                <div class="col-sm-6">
-                    <div class="col-sm-6">
-                        <img src="<?= $audiobook->picture ?>" class="audiobookImg">
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="panel-heading text-center">
-                            <br><br>
-                            <label><?= Html::encode($audiobook->title)?></label>
-                            <br><br>
-                            $ <?= Html::encode($audiobook->price) ?>
-                            <br><br>
-                              <?= Html::a('<span style="color: white">View details</span>', ['/item/details', 'id' => $audiobook->id], ['class' => 'btn btn-gray align-center']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-sm-3">
+                <div class="col-sm-3">
                     <div class="panel panel-default">
                           <div class="panel-body">
                               <img src="<?= $audiobook->picture ?>" class="audiobookImg">
@@ -69,7 +54,7 @@ $this->title = 'Welcome to our catalog!';
                               </div>
                           </div>
                     </div>
-                </div> -->
+                </div>
             <?php endforeach; ?>
           </ul>
     </div>
