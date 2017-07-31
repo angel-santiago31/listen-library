@@ -28,8 +28,10 @@ use backend\models\Genre;
  * @property Publisher $publisher
  * @property Contains[] $contains
  */
-class Audiobook extends \yii\db\ActiveRecord
+class Audiobook extends \yii\db\ActiveRecord implements \yz\shoppingcart\CartPositionInterface
 {
+    use \yz\shoppingcart\CartPositionTrait;
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
@@ -127,5 +129,15 @@ class Audiobook extends \yii\db\ActiveRecord
         $genre = Genre::find()->where(['id' => $this->genre])->one();
 
         return $genre->genre;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

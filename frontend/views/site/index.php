@@ -49,7 +49,7 @@ $this->title = 'Welcome to our catalog!';
                             <br><br>
                             $ <?= Html::encode($audiobook->price) ?>
                             <br><br>
-                              <?= Html::a('<span style="color: white">View details</span>', ['/item/details', 'id' => $audiobook->id], ['class' => 'btn btn-gray align-center']) ?>
+                              <?= Html::a('<span style="color: white">View details</span>', ['site/add-to-cart', 'id' => $audiobook->id], ['class' => 'btn btn-gray align-center']) ?>
                         </div>
                     </div>
                 </div>

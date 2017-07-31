@@ -37,7 +37,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index'], 'linkOptions' => ['style' => 'color: white']],
-        ['label' => 'About', 'url' => ['/site/about'], 'linkOptions' => ['style' => 'color: white']],
+        //['label' => 'About', 'url' => ['/site/about'], 'linkOptions' => ['style' => 'color: white']],
         ['label' => 'Contact', 'url' => ['/site/contact'], 'linkOptions' => ['style' => 'color: white']],
     ];
     if (Yii::$app->user->isGuest) {
@@ -73,7 +73,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left" style="color:white">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left" style="color:white">&copy; Listen Library <?= date('Y') ?></p>
 
         <p class="pull-right" style="color:white"><?= Yii::powered() ?></p>
     </div>

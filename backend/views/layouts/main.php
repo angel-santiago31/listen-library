@@ -91,7 +91,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left" style="color:white">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left" style="color:white">&copy; Listen Library <?= date('Y') ?></p>
 
         <p class="pull-right" style="color:white"><?= Yii::powered() ?></p>
     </div>

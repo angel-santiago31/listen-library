@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "2amigos/yii2-date-picker-widget" : "~1.0",
         "kartik-v/yii2-popover-x": "*",
-        "fxp/composer-asset-plugin": "^1.3"
+        "fxp/composer-asset-plugin": "^1.3",
+        "omnilight/yii2-shopping-cart": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

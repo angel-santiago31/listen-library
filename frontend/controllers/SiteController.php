@@ -229,4 +229,49 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionAddToCart($id)
+    {
+        $cart = Yii::$app->cart;
+
+        $model = Audiobook::findOne($id);
+        if ($model) {
+            $cart->put($model, 1);
+            return $this->redirect(['cart-view']);
+        }
+        throw new NotFoundHttpException();
+    }
+
+    public function actionCartView()
+    {
+       $itemsCount = \Yii::$app->cart->getCount();
+       $total = \Yii::$app->cart->getCost();
+
+       return $this->render('cart-view', [
+           'itemsCount' => $itemsCount,
+            'total' => $total,
+       ]);
+    }
+
+    public function actionCartRemove($id)
+    {
+       $cart = Yii::$app->cart;
+
+       $model = Audiobook::findOne($id);
+
+       if ($model) {
+           $cart->remove($model);
+
+           return $this->redirect(['cart-view']);
+       }
+
+       throw new NotFoundHttpException();
+    }
+
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 }

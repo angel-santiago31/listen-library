@@ -84,4 +84,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(CreditCard::className(), ['id' => 'card_last_digits']);
     }
+
+    public function isCartEmpty()
+    {
+        return (Yii::$app->cart->getCount() == NULL) ? 'btn btn-default disabled' : 'btn btn-default';
+    }
 }
