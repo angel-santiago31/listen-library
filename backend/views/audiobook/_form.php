@@ -54,6 +54,8 @@ use dosamigos\datepicker\DatePicker;
 
                 <?= $form->field($model, 'picture')->textInput(['maxlength' => true]) ?>
 
+                <?= $form->field($model, 'picture2')->textInput(['maxlength' => true]) ?>
+
                 <?= $form->field($model, 'summary')->textArea(['maxlength' => true]) ?>
 
                 <div class="form-group">
@@ -62,5 +64,5 @@ use dosamigos\datepicker\DatePicker;
 
             <?php ActiveForm::end(); ?>
         </div>
-    </div>  
+    </div>
 </div>

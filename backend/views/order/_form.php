@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\models\Order;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
@@ -9,25 +10,17 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="order-form">
+    <div class="row">
+        <div class="col-lg-5">
+              <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+              <?= $form->field($model, 'status')->dropDownList([Order::STATUS_ACTIVE => 'Active', Order::STATUS_DELETED => 'Deleted']) ?>
 
-    <?= $form->field($model, 'item_quantity')->textInput() ?>
+              <div class="form-group">
+                  <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+              </div>
 
-    <?= $form->field($model, 'date')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'customer_id')->textInput() ?>
-
-    <?= $form->field($model, 'card_last_digits')->textInput() ?>
-
-    <?= $form->field($model, 'price_total')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+              <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

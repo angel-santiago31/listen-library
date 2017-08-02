@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use common\models\Customer;
 
 /**
  * This is the model class for table "order".
@@ -66,12 +67,12 @@ class Order extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Order Id',
+            'id' => 'Order #',
             'item_quantity' => 'Items in Order',
             'date' => 'Order Date',
             'status' => 'Order Status',
             'customer_id' => 'Customer Id',
-            'credit_card' => 'Card Last Digits',
+            'credit_card' => 'Credit Card Id',
             'price_total' => 'Price Total',
         ];
     }

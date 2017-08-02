@@ -13,7 +13,7 @@ $this->title = $model->title;
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h1 style="color: white" class="text-center"><?= Html::encode($this->title) ?> </h1>
+                <h1 style="color: white" class="text-center"><?= Html::encode($this->title) ?> : $<?= $model->price ?> </h1>
             </div>
             <div class="panel-body col-sm-offset-1">
                 <div class="col-sm-4">
