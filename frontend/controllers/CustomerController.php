@@ -9,6 +9,8 @@ use backend\models\CreditCard;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Order;
+use backend\models\OrderSearch;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -108,6 +110,17 @@ class CustomerController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionPurchases($id)
+    {
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->searchCustom(Yii::$app->request->queryParams);
+
+        return $this->render('purchases', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

@@ -49,27 +49,13 @@ $this->title = 'Welcome to our catalog!';
                             <br><br>
                             $ <?= Html::encode($audiobook->price) ?>
                             <br><br>
-                              <?= Html::a('<span style="color: white">View details</span>', ['site/add-to-cart', 'id' => $audiobook->id], ['class' => 'btn btn-gray align-center']) ?>
+                            <div class="btn-group">
+                                <?= Html::a('<span style="color: white">Add to Cart</span>', ['site/add-to-cart', 'id' => $audiobook->id], ['class' => 'btn btn-gray']) ?>
+                                <?= Html::a('View details', ['site/view-item-details', 'id' => $audiobook->id], ['class' => 'btn btn-default']) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-sm-3">
-                    <div class="panel panel-default">
-                          <div class="panel-body">
-                              <img src="<?= $audiobook->picture ?>" class="audiobookImg">
-                          </div>
-                          <div class="panel-footer text-center">
-                              <label><?= Html::encode($audiobook->title)?></label>
-                              <br><br>
-                              $ <?= Html::encode($audiobook->price) ?>
-                              <br><br>
-                              <div class="btn-group">
-                                  <?= Html::a('View details', ['/item/details', 'id' => $audiobook->id], ['class' => 'btn btn-default align-center']) ?>
-                                  <?= Html::a('<i class="glyphicon glyphicon-shopping-cart"></i> Add to Cart', ['item/add-to-cart', 'id' => $audiobook->id, 'amount' => 1], ['class' => 'btn btn-danger redCss']) ?>
-                              </div>
-                          </div>
-                    </div>
-                </div> -->
             <?php endforeach; ?>
           </ul>
     </div>

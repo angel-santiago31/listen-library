@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -15,6 +16,9 @@ use frontend\models\ContactForm;
 use backend\models\CreditCard;
 use backend\models\Audiobook;
 use backend\models\AudiobookSearch;
+use backend\models\Order;
+use backend\models\Contains;
+use common\models\Customer;
 
 /**
  * Site controller
@@ -268,10 +272,102 @@ class SiteController extends Controller
        throw new NotFoundHttpException();
     }
 
-    public function actionView($id)
+    public function actionCheckout()
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+         //if user is guest, redirect him/her to log in page
+         if (Yii::$app->user->isGuest) {
+
+             return $this->redirect(['login']);
+         }
+
+         return $this->redirect(['placeorder']);
+    }
+
+    public function actionPlaceorder()
+    {
+        //Get the current customer's credit card.
+        $credit_card = $this->findPaymentMethod(Yii::$app->user->identity->getId());
+
+        //Create a new Order.
+        $order = new Order();
+        $order->item_quantity = Yii::$app->cart->getCount();
+        $order->status = Order::STATUS_ACTIVE;
+        $order->customer_id = Yii::$app->user->identity->getId();
+        $order->credit_card = $credit_card->id;
+        $order->price_total = Yii::$app->cart->getCost();
+
+        if ($order->save(false)) {
+            //asociate items to created order
+            $positions = Yii::$app->cart->positions;
+
+            foreach($positions as $position) {
+                $audiobook = new Contains();
+                $audiobook->order_id = $order->id;
+                $audiobook->audiobook_id = $position->id;
+                $audiobook->save(false);
+            }
+
+            Yii::$app->cart->removeAll();
+
+            return $this->redirect(['site/view-order-details', 'id' => $order->id]);
+        }
+
+        return $this->redirect(['cart-view']);
+    }
+
+    public function actionViewOrderDetails($id)
+    {
+        $items_in_order = Contains::find()->where(['order_id' => $id])->all();
+
+        return $this->render('view-order-details', [
+            'model' => $this->findOrder($id),
+            'items_in_order' => $items_in_order,
         ]);
+    }
+
+    public function actionViewItemDetails($id)
+    {
+        return $this->render('view-item-details', [
+            'model' => $this->findAudiobook($id),
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Customer::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findPaymentMethod($id)
+    {
+        if (($model = CreditCard::find()->where(['customer_id' => $id])->one()) !== null) {
+
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findAudiobook($id)
+    {
+        if (($model = Audiobook::findOne($id)) !== null) {
+
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findOrder($id)
+    {
+        if (($model = Order::findOne($id)) !== null) {
+
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }

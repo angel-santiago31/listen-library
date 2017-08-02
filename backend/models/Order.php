@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-use common\models\Customer;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "order".
@@ -13,15 +13,17 @@ use common\models\Customer;
  * @property integer $date
  * @property string $status
  * @property integer $customer_id
- * @property integer $card_last_digits
+ * @property integer $credit_card
  * @property double $price_total
- *
  * @property Contains[] $contains
  * @property Customer $customer
- * @property CreditCard $cardLastDigits
+ * @property CreditCard $creditCard
  */
 class Order extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 'Deleted';
+    const STATUS_ACTIVE = 'Active';
+
     /**
      * @inheritdoc
      */
@@ -30,18 +32,31 @@ class Order extends \yii\db\ActiveRecord
         return 'order';
     }
 
+    public function behaviors()
+    {
+        return [
+            // Other behaviors
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'date',
+                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['item_quantity', 'date', 'status', 'customer_id', 'card_last_digits', 'price_total'], 'required'],
-            [['item_quantity', 'date', 'customer_id', 'card_last_digits'], 'integer'],
+            [['item_quantity', 'status', 'customer_id', 'credit_card', 'price_total'], 'required'],
+            [['item_quantity', 'customer_id', 'credit_card'], 'integer'],
             [['price_total'], 'number'],
+            [['date'], 'safe'],
             [['status'], 'string', 'max' => 18],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['card_last_digits'], 'exist', 'skipOnError' => true, 'targetClass' => CreditCard::className(), 'targetAttribute' => ['card_last_digits' => 'id']],
+            [['credit_card'], 'exist', 'skipOnError' => true, 'targetClass' => CreditCard::className(), 'targetAttribute' => ['credit_card' => 'id']],
         ];
     }
 
@@ -56,7 +71,7 @@ class Order extends \yii\db\ActiveRecord
             'date' => 'Order Date',
             'status' => 'Order Status',
             'customer_id' => 'Customer Id',
-            'card_last_digits' => 'Card Last Digits',
+            'credit_card' => 'Card Last Digits',
             'price_total' => 'Price Total',
         ];
     }
@@ -80,9 +95,9 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCardLastDigits()
+    public function getCreditCard()
     {
-        return $this->hasOne(CreditCard::className(), ['id' => 'card_last_digits']);
+        return $this->hasOne(CreditCard::className(), ['id' => 'credit_card']);
     }
 
     public function isCartEmpty()

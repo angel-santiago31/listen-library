@@ -12,7 +12,7 @@ $this->title = 'Shopping Cart';
       <div class="panel panel-default">
           <div class="panel-heading">
                 <h1><i class="glyphicon glyphicon-shopping-cart"></i> <?= Html::encode($this->title) ?></h1>
-                <?= Html::a('Proceed to checkout [' . $total . ']'  , ['item/checkout'], ['class' => Order::isCartEmpty()]) ?>
+                <?= Html::a('Proceed to checkout [' . $total . ']'  , ['site/checkout'], ['class' => Order::isCartEmpty()]) ?>
           </div>
           <div class="panel-body">
             <div class="col-sm-12">

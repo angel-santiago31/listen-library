@@ -62,4 +62,32 @@ class Contains extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Audiobook::className(), ['id' => 'audiobook_id']);
     }
+
+    public function getAudiobookPicture()
+    {
+        $audiobook = Audiobook::findOne($this->audiobook_id);
+
+        return $audiobook->picture;
+    }
+
+    public function getAudiobookPicture2()
+    {
+        $audiobook = Audiobook::findOne($this->audiobook_id);
+
+        return $audiobook->picture2;
+    }
+
+    public function getAudiobookTitle()
+    {
+        $audiobook = Audiobook::findOne($this->audiobook_id);
+
+        return $audiobook->title;
+    }
+
+    public function getAudiobookPrice()
+    {
+        $audiobook = Audiobook::findOne($this->audiobook_id);
+
+        return $audiobook->price;
+    }
 }

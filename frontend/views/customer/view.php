@@ -50,4 +50,7 @@ $this->title = $model->first_name . ' ' . $model->last_name;
             ]) ?>
         </div>
     </div>
+    <div class="row">
+        <?= Html::a('<h1><i class="glyphicon glyphicon-list-alt"></i> View Purchases</h1>', ['customer/purchases', 'id' => $model->id], ['class' => 'btn btn-link']) ?>
+    </div>
 </div>

@@ -45,6 +45,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login'], 'linkOptions' => ['style' => 'color: white']];
     } else {
         $menuItems[] = ['label' => 'My Account', 'url' => ['/customer/view', 'id' => Yii::$app->user->identity->id], 'linkOptions' => ['style' => 'color: white']];
+        $menuItems[] = ['label' => 'Cart', 'url' => ['/site/cart-view'], 'linkOptions' => ['style' => 'color: white']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

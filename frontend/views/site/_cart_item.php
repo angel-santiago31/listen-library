@@ -17,9 +17,7 @@ $this->title = 'Cart Items';
                 </div>
                 <br>
                 <div class="col-sm-6">
-                    <h5>
-                        <?= $position->title ?>
-                    </h5>
+                    <h5><?= Html::a($position->title, ['site/view-item-details', 'id' => $position->id], ['class' => 'btn btn-link']) ?></h5>
                 </div>
                 <div class="col-sm-2">
                     <h5>$ <?= $position->price ?> </h5>

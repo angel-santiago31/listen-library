@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 use backend\models\Author;
+use backend\models\Narrator;
+use backend\models\Publisher;
 use backend\models\Genre;
 /**
  * This is the model class for table "audiobook".
@@ -49,13 +51,13 @@ class Audiobook extends \yii\db\ActiveRecord implements \yz\shoppingcart\CartPos
     public function rules()
     {
         return [
-            [['genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id', 'price', 'cost', 'picture', 'summary'], 'required'],
+            [['genre', 'is_fiction', 'author_id', 'narrator_id', 'length', 'release_date', 'publisher_id', 'price', 'cost', 'picture', 'picture2', 'summary'], 'required'],
             [['genre', 'is_fiction', 'author_id', 'narrator_id', 'publisher_id', 'active'], 'integer'],
             [['release_date', 'title'], 'safe'],
             [['price', 'cost'], 'number'],
             [['title'], 'string', 'max' => 64],
             [['length'], 'string', 'max' => 18],
-            [['picture', 'summary'], 'string', 'max' => 256],
+            [['picture', 'picture2', 'summary'], 'string', 'max' => 256],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::className(), 'targetAttribute' => ['author_id' => 'id']],
             [['narrator_id'], 'exist', 'skipOnError' => true, 'targetClass' => Narrator::className(), 'targetAttribute' => ['narrator_id' => 'id']],
             [['publisher_id'], 'exist', 'skipOnError' => true, 'targetClass' => Publisher::className(), 'targetAttribute' => ['publisher_id' => 'id']],
@@ -122,6 +124,20 @@ class Audiobook extends \yii\db\ActiveRecord implements \yz\shoppingcart\CartPos
         $author = Author::find()->where(['id' => $this->author_id])->one();
 
         return $author->name;
+    }
+
+    public function getNarratorName()
+    {
+        $narrator = Narrator::find()->where(['id' => $this->narrator_id])->one();
+
+        return $narrator->name;
+    }
+
+    public function getPublisherName()
+    {
+        $publisher = Publisher::find()->where(['id' => $this->publisher_id])->one();
+
+        return $publisher->name;
     }
 
     public function getGenreName()
