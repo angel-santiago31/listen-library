@@ -82,7 +82,8 @@ class SiteController extends Controller
         $model = new Audiobook();
 
         if ($model->load(Yii::$app->request->post()) && $title == NULL) {
-            $audiobookList = Audiobook::find()->where(['active' => Audiobook::STATUS_ACTIVE, 'title' => $model->title])->all();
+            $query = "SELECT * FROM `audiobook` where `title` LIKE '%$model->title%' ";
+            $audiobookList = Audiobook::findBySql($query)->all();
 
             return $this->render('index', [
                'model' => $model,

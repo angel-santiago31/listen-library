@@ -20,7 +20,7 @@ class Contains extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'contains';
+        return 'item_in_order';
     }
 
     /**

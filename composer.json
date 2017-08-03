@@ -18,10 +18,11 @@
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "2amigos/yii2-date-picker-widget" : "~1.0",
         "kartik-v/yii2-popover-x": "*",
         "fxp/composer-asset-plugin": "^1.3",
-        "omnilight/yii2-shopping-cart": "*"
+        "omnilight/yii2-shopping-cart": "*",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "2amigos/yii2-date-picker-widget" : "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

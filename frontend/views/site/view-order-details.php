@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="panel-footer text-right">
-                <h4>Purchase date: <?= Yii::$app->formatter->asDate($model->date, 'php:m-d-Y') ?></h4>
+                <h4>Purchase date: <?= Yii::$app->formatter->asDate($model->purchase_date, 'php:m-d-Y') ?></h4>
                 <h3>Total: <?= $model->price_total ?></h3>
             </div>
         </div>

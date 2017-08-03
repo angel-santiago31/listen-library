@@ -18,7 +18,7 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id', 'item_quantity', 'date', 'customer_id', 'credit_card'], 'integer'],
+            [['id', 'item_quantity', 'purchase_date', 'customer_id', 'credit_card'], 'integer'],
             [['status'], 'safe'],
             [['price_total'], 'number'],
         ];
@@ -62,7 +62,7 @@ class OrderSearch extends Order
         $query->andFilterWhere([
             'id' => $this->id,
             'item_quantity' => $this->item_quantity,
-            'date' => $this->date,
+            'purchase_date' => $this->purchase_date,
             'customer_id' => $this->customer_id,
             'credit_card' => $this->credit_card,
             'price_total' => $this->price_total,
@@ -97,7 +97,7 @@ class OrderSearch extends Order
         $query->andFilterWhere([
             'id' => $this->id,
             'item_quantity' => $this->item_quantity,
-            'date' => $this->date,
+            'purchase_date' => $this->purchase_date,
             'customer_id' => $this->customer_id,
             'credit_card' => $this->credit_card,
             'price_total' => $this->price_total,

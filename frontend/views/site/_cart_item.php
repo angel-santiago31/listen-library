@@ -10,6 +10,7 @@ $this->title = 'Cart Items';
 ?>
 <div class="site-about">
     <div class"container">
+    <hr>
     <div class="row">
             <div class"col-sm-12">
                 <div class="col-sm-2">

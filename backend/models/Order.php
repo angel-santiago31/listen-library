@@ -11,7 +11,7 @@ use common\models\Customer;
  *
  * @property integer $id
  * @property integer $item_quantity
- * @property integer $date
+ * @property integer $purchase_date
  * @property string $status
  * @property integer $customer_id
  * @property integer $credit_card
@@ -30,7 +30,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'order';
+        return 'orders';
     }
 
     public function behaviors()
@@ -39,7 +39,7 @@ class Order extends \yii\db\ActiveRecord
             // Other behaviors
             [
                 'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'date',
+                'createdAtAttribute' => 'purchase_date',
                 'updatedAtAttribute' => false,
             ],
         ];
@@ -54,7 +54,7 @@ class Order extends \yii\db\ActiveRecord
             [['item_quantity', 'status', 'customer_id', 'credit_card', 'price_total'], 'required'],
             [['item_quantity', 'customer_id', 'credit_card'], 'integer'],
             [['price_total'], 'number'],
-            [['date'], 'safe'],
+            [['purchase_date'], 'safe'],
             [['status'], 'string', 'max' => 18],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
             [['credit_card'], 'exist', 'skipOnError' => true, 'targetClass' => CreditCard::className(), 'targetAttribute' => ['credit_card' => 'id']],
@@ -69,7 +69,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => 'Order #',
             'item_quantity' => 'Items in Order',
-            'date' => 'Order Date',
+            'purchase_date' => 'Order Date',
             'status' => 'Order Status',
             'customer_id' => 'Customer Id',
             'credit_card' => 'Credit Card Id',

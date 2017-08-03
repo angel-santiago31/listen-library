@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'id'
                 ],
                 //'item_quantity',
-                'date:date',
+                'purchase_date:date',
                 'status',
                 'customer_id',
                 // 'card_last_digits',

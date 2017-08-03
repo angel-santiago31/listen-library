@@ -30,7 +30,7 @@ $this->title = 'Welcome to our catalog!';
         </div>
     </div>
     <div class="row">
-          <br><br><br>
+          <hr>
           <?php  if ($audiobookList == NULL): ?>
             <div class="container text-left">
                   <label>Oops! There are no results for your search. Please try again.</label>
@@ -39,6 +39,7 @@ $this->title = 'Welcome to our catalog!';
           <ul class="list-group">
             <?php foreach($audiobookList as $audiobook): ?>
                 <div class="col-sm-6">
+                    <br><br>
                     <div class="col-sm-6">
                         <img src="<?= $audiobook->picture ?>" class="audiobookImg">
                     </div>

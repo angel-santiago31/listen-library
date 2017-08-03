@@ -66,12 +66,15 @@ CREATE TABLE `audiobook` (
   CONSTRAINT `audiobook_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `audiobook_ibfk_2` FOREIGN KEY (`narrator_id`) REFERENCES `narrator` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `audiobook_ibfk_3` FOREIGN KEY (`publisher_id`) REFERENCES `publisher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `audiobook` */
 
 insert  into `audiobook`(`id`,`title`,`genre`,`is_fiction`,`author_id`,`narrator_id`,`length`,`release_date`,`publisher_id`,`price`,`cost`,`picture`,`picture2`,`summary`,`active`) values 
-(3,'Harry Potter and the Sorcerer\'s Stone, Book 1',1,1,1,1,'8 hrs and 34 mins','Nov-20-2015',1,29.99,50.00,'https://images-na.ssl-images-amazon.com/images/I/61+nk5cUSiL._SL300_.jpg','http://ecx.images-amazon.com/images/I/61+nk5cUSiL._SL150_.jpg','Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. ',10);
+(3,'Harry Potter and the Sorcerer\'s Stone, Book 1',1,1,1,1,'8 hrs and 34 mins','Nov-20-2015',1,29.99,50.00,'https://images-na.ssl-images-amazon.com/images/I/61+nk5cUSiL._SL300_.jpg','http://ecx.images-amazon.com/images/I/61+nk5cUSiL._SL150_.jpg','Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. ',10),
+(4,'Harry Potter and the Chamber of Secrets, Book 2',1,1,1,1,'9 hrs and 24 mins ','Nov-15-2015',1,29.99,20.00,'https://images-na.ssl-images-amazon.com/images/I/61NePgI8YzL._SL300_.jpg','http://ecx.images-amazon.com/images/I/61NePgI8YzL._SL150_.jpg','\"\'There is a plot, Harry Potter. A plot to make most terrible things happen at Hogwarts School of Witchcraft and Wizardry this year.\'\"\r\nHarry Potter\'s summer has includ',10),
+(5,'Harry Potter and the Prisoner of Azkaban, Book 3',1,1,1,1,'12 hrs and 15 min','Nov-20-2015',1,29.99,20.00,'https://images-na.ssl-images-amazon.com/images/I/61X-FUaMk2L._SL300_.jpg','http://ecx.images-amazon.com/images/I/61X-FUaMk2L._SL150_.jpg','When the Knight Bus crashes through the darkness and screeches to a halt in front of him, it\'s the start of another far from ordinary year at Hogwarts for Harry Potter.',10),
+(6,'Undercover',2,0,2,2,'8 hrs and 16 mins ','Aug-01-2015',2,27.29,15.34,'https://images-na.ssl-images-amazon.com/images/I/510QoX8SEwL._SL300_.jpg','http://ecx.images-amazon.com/images/I/510QoX8SEwL._SL150_.jpg','For DEA Special Agent Marshall Everett, life as he knows it is over once a gunshot wound renders his arm useless. Barred forever from the undercover work he loves, he has nothing - no close friends, no family, no hometown or base, and no desire to settle f',10);
 
 /*Table structure for table `author` */
 
@@ -81,32 +84,13 @@ CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Author Id',
   `name` varchar(18) NOT NULL COMMENT 'Name',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `author` */
 
 insert  into `author`(`id`,`name`) values 
-(1,'J.K. Rowling');
-
-/*Table structure for table `contains` */
-
-DROP TABLE IF EXISTS `contains`;
-
-CREATE TABLE `contains` (
-  `order_id` int(11) NOT NULL COMMENT 'Order Id',
-  `audiobook_id` int(11) NOT NULL COMMENT 'Audiobook Id',
-  KEY `order_id` (`order_id`),
-  KEY `audiobook_id` (`audiobook_id`),
-  CONSTRAINT `contains_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `contains_ibfk_2` FOREIGN KEY (`audiobook_id`) REFERENCES `audiobook` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `contains` */
-
-insert  into `contains`(`order_id`,`audiobook_id`) values 
-(25,3),
-(26,3),
-(27,3);
+(1,'J.K. Rowling'),
+(2,'Danielle Steel');
 
 /*Table structure for table `credit_card` */
 
@@ -169,12 +153,31 @@ CREATE TABLE `genre` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
   `genre` varchar(18) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `genre` */
 
 insert  into `genre`(`id`,`genre`) values 
-(1,'Fantasy');
+(1,'Fantasy'),
+(2,'Romance');
+
+/*Table structure for table `item_in_order` */
+
+DROP TABLE IF EXISTS `item_in_order`;
+
+CREATE TABLE `item_in_order` (
+  `order_id` int(11) NOT NULL COMMENT 'Order Id',
+  `audiobook_id` int(11) NOT NULL COMMENT 'Audiobook Id',
+  KEY `order_id` (`order_id`),
+  KEY `audiobook_id` (`audiobook_id`),
+  CONSTRAINT `item_in_order_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `item_in_order_ibfk_2` FOREIGN KEY (`audiobook_id`) REFERENCES `audiobook` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `item_in_order` */
+
+insert  into `item_in_order`(`order_id`,`audiobook_id`) values 
+(33,6);
 
 /*Table structure for table `migration` */
 
@@ -200,21 +203,22 @@ CREATE TABLE `narrator` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Narrator Id',
   `name` varchar(18) NOT NULL COMMENT 'Name',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `narrator` */
 
 insert  into `narrator`(`id`,`name`) values 
-(1,'Jim Dale');
+(1,'Jim Dale'),
+(2,'Alexander Cendese');
 
-/*Table structure for table `order` */
+/*Table structure for table `orders` */
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Order Id',
   `item_quantity` int(11) NOT NULL COMMENT 'Items in Order',
-  `date` int(11) NOT NULL COMMENT 'Order Date',
+  `purchase_date` int(11) NOT NULL COMMENT 'Order Date',
   `status` varchar(18) NOT NULL COMMENT 'Order Status',
   `customer_id` int(11) NOT NULL COMMENT 'Customer Id',
   `credit_card` int(11) NOT NULL COMMENT 'Card Last Digits',
@@ -222,16 +226,14 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   KEY `card_last_digits` (`credit_card`),
-  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `order_ibfk_2` FOREIGN KEY (`credit_card`) REFERENCES `credit_card` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`credit_card`) REFERENCES `credit_card` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
-/*Data for the table `order` */
+/*Data for the table `orders` */
 
-insert  into `order`(`id`,`item_quantity`,`date`,`status`,`customer_id`,`credit_card`,`price_total`) values 
-(25,1,1501631366,'Active',9,4,29.99),
-(26,2,1501632463,'Active',9,4,59.98),
-(27,1,1501632758,'Active',9,4,29.99);
+insert  into `orders`(`id`,`item_quantity`,`purchase_date`,`status`,`customer_id`,`credit_card`,`price_total`) values 
+(33,1,1501794605,'Active',9,4,27.29);
 
 /*Table structure for table `publisher` */
 
@@ -241,12 +243,35 @@ CREATE TABLE `publisher` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Publisher Id',
   `name` varchar(64) NOT NULL COMMENT 'Name',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `publisher` */
 
 insert  into `publisher`(`id`,`name`) values 
-(1,'Pottermore from J.K. Rowling');
+(1,'Pottermore from J.K. Rowling'),
+(2,'Brilliance Audio');
+
+/*Table structure for table `report` */
+
+DROP TABLE IF EXISTS `report`;
+
+CREATE TABLE `report` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(250) NOT NULL DEFAULT '',
+  `description` text,
+  `type` varchar(11) NOT NULL,
+  `from_date` varchar(128) DEFAULT NULL,
+  `to_date` varchar(128) DEFAULT NULL,
+  `refers_to` varchar(58) DEFAULT NULL,
+  `item_selected` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+
+/*Data for the table `report` */
+
+insert  into `report`(`id`,`title`,`description`,`type`,`from_date`,`to_date`,`refers_to`,`item_selected`) values 
+(40,'Romance Report','sffdsgdfg','Sales','1501718400','1501718400','2','6'),
+(41,'hhjfhgjghjgh','ghjgfhjfghjg','Revenue','1501718400','1501718400','2','6');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

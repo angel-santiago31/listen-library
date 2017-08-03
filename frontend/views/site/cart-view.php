@@ -22,8 +22,6 @@ $this->title = 'Shopping Cart';
                     <?php if (!Yii::$app->user->isGuest): ?>
                         <h4><?= Yii::$app->user->identity->first_name ?>, you currently have <?= $itemsCount ?> item(s) in your cart.</h4>
                     <?php endif ?>
-                    <br>
-                    <hr>
                     <?php
                         $positions = \Yii::$app->cart->positions;
                         //var_dump($positions);
@@ -33,8 +31,6 @@ $this->title = 'Shopping Cart';
                             //var_dump($position);
                         }
                     ?>
-                    <br>
-                    <br>
                     <hr>
               </div>
           </div>

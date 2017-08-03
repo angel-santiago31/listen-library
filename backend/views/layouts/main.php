@@ -63,6 +63,7 @@ AppAsset::register($this);
                         'linkOptions' => ['style' => 'color: white']
                   ];
         $menuItems[] = ['label' => 'Orders', 'url' => ['/order/index'], 'linkOptions' => ['style' => 'color: white']];
+        $menuItems[] = ['label' => 'Reports', 'url' => ['/report/index'], 'linkOptions' => ['style' => 'color: white']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
