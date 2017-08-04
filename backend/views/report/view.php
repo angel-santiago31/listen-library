@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\models\Report;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Report */
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body btn-gray text-center">
-                <h1 style="color: white"><i class="glyphicon glyphicon-headphones" style="color: #f4511e"></i> Listen Library Official <?= $report->type ?> Report </h1>
+                <h1 style="color: white"><i class="glyphicon glyphicon-headphones" style="color: #f4511e"></i> Listen Library Official <?= $report->type[0] . strtolower(substr($report->type, 1)); ?> Report </h1>
             </div>
         </div>
         <div class="panel panel-default">
@@ -51,17 +52,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                  '&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;' . $price .
                                  '&emsp;&emsp;&emsp;&nbsp;' . $cost .
                                  '&emsp;&emsp;&emsp;&nbsp;&nbsp&nbsp;' . $item .
-                                 '&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;' . $purchase_date;
+                                 '&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;' . $purchase_date . '<br>';
                          ?>
                       <?php endforeach; ?>
                       <br><hr>
                       <label>
+                          <?php
+                              if ($report->type == Report::REVENUE) {
+                                  foreach ($data_to_show3 as $rows) {
+                                      $report->total_cost = $rows['total_cost'];
+                                  }
+                              }
+                          ?>
                           <?php foreach($data_to_show2 as $rows): ?>
-                              <?php $total_sale = $rows['total_sale'];
-                                    echo '<span style="color: #f4511e">TOTAL IN SALES: </span>&emsp;&emsp;&emsp;&emsp;&nbsp;'
-                                     . $total_sale;
-                              ?>
+                              <?php $report->total_sale = $rows['total_sale']; ?>
                           <?php endforeach; ?>
+
+                          <?= '<span style="color: #f4511e">TOTAL IN ' . $report->type . ': </span>&emsp;&emsp;&emsp;&emsp;&nbsp;'. $report->space . $report->total; ?>
                       </label>
                   </div>
             </div>

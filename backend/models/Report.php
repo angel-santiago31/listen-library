@@ -18,6 +18,12 @@ use Yii;
  */
 class Report extends \yii\db\ActiveRecord
 {
+    const SALES = 'SALES';
+    const REVENUE = 'REVENUE';
+
+    public $total_cost;
+    public $total_sale;
+
     /**
      * @inheritdoc
      */
@@ -67,5 +73,15 @@ class Report extends \yii\db\ActiveRecord
     public function getToDate()
     {
         return Yii::$app->formatter->asDate($this->to_date, 'php:m-d-Y');
+    }
+
+    public function getTotal()
+    {
+        return $this->total_sale - $this->total_cost;
+    }
+
+    public function getSpace()
+    {
+        return (($this->type == self::REVENUE) ? '&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;' : '');
     }
 }

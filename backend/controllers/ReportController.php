@@ -53,17 +53,18 @@ class ReportController extends Controller
     {
         $report = $this->findModel($id);
         $connection = Yii::$app->getDb();
+        $command3 = $result3 = null;
 
-        if ($report->from_date == $report->to_date) {
+        if ($report->type == Report::SALES) {
             $command = $connection->createCommand("SELECT order_id, genre, price, cost, audiobook_id, purchase_date
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date");
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
 
             $command2 = $connection->createCommand("SELECT SUM(price) as total_sale
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date");
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
         } else {
             $command = $connection->createCommand("SELECT order_id, genre, price, cost, audiobook_id, purchase_date
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
@@ -74,15 +75,24 @@ class ReportController extends Controller
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to
                                                    WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+
+            $command3 = $connection->createCommand("SELECT SUM(cost) as total_cost
+                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
+                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to
+                                                    WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
         }
 
         $result = $command->queryAll();
         $result2 = $command2->queryAll();
+        if ($command3 != null) {
+            $result3 = $command3->queryAll();
+        }
 
         return $this->render('view', [
             'report' => $report,
             'data_to_show' => $result,
             'data_to_show2' => $result2,
+            'data_to_show3' => $result3,
         ]);
     }
 
