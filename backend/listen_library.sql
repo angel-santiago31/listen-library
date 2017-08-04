@@ -177,7 +177,9 @@ CREATE TABLE `item_in_order` (
 /*Data for the table `item_in_order` */
 
 insert  into `item_in_order`(`order_id`,`audiobook_id`) values 
-(33,6);
+(39,5),
+(39,6),
+(40,6);
 
 /*Table structure for table `migration` */
 
@@ -228,12 +230,13 @@ CREATE TABLE `orders` (
   KEY `card_last_digits` (`credit_card`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`credit_card`) REFERENCES `credit_card` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 /*Data for the table `orders` */
 
 insert  into `orders`(`id`,`item_quantity`,`purchase_date`,`status`,`customer_id`,`credit_card`,`price_total`) values 
-(33,1,1501794605,'Active',9,4,27.29);
+(39,2,1501865167,'Active',9,4,57.28),
+(40,1,1501865172,'Active',9,4,27.29);
 
 /*Table structure for table `publisher` */
 
@@ -260,18 +263,18 @@ CREATE TABLE `report` (
   `title` varchar(250) NOT NULL DEFAULT '',
   `description` text,
   `type` varchar(11) NOT NULL,
-  `from_date` varchar(128) DEFAULT NULL,
-  `to_date` varchar(128) DEFAULT NULL,
+  `from_date` int(11) DEFAULT NULL,
+  `to_date` int(11) DEFAULT NULL,
   `refers_to` varchar(58) DEFAULT NULL,
   `item_selected` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 /*Data for the table `report` */
 
 insert  into `report`(`id`,`title`,`description`,`type`,`from_date`,`to_date`,`refers_to`,`item_selected`) values 
-(40,'Romance Report','sffdsgdfg','Sales','1501718400','1501718400','2','6'),
-(41,'hhjfhgjghjgh','ghjgfhjfghjg','Revenue','1501718400','1501718400','2','6');
+(46,'Romance Sales','Text...','SALES',1501804800,1501890900,'2','6'),
+(47,'Harry Potter Revenue','Text...','REVENUE',1501804800,1501890900,'1','5');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
