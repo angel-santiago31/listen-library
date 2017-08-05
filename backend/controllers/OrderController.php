@@ -38,6 +38,17 @@ class OrderController extends Controller
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `orders`";
+        Yii::$app->getSession()->setFlash('orders_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Orders Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +62,17 @@ class OrderController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `orders` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('order_view', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Order Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -85,6 +107,17 @@ class OrderController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO orders (status) VALUES($model->status)";
+            Yii::$app->getSession()->setFlash('order_info_update', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Order Update',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -101,6 +134,16 @@ class OrderController extends Controller
      */
     public function actionDelete($id)
     {
+        Yii::$app->getSession()->setFlash('order_deactivate', [
+                   'type' => 'warning',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Order Deactivate',
+                   'message' => 'This function is currently not available.',
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
+
         return $this->redirect(['index']);
     }
 

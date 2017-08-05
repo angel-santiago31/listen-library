@@ -38,6 +38,17 @@ class ReportController extends Controller
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `report`";
+        Yii::$app->getSession()->setFlash('report_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Report Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -54,32 +65,38 @@ class ReportController extends Controller
         $report = $this->findModel($id);
         $connection = Yii::$app->getDb();
         $command3 = $result3 = null;
+        $query_3 = null;
 
         if ($report->type == Report::SALES) {
-            $command = $connection->createCommand("SELECT order_id, genre, price, cost, audiobook_id, purchase_date
+            $query_1 = "SELECT order_id, genre, price, cost, audiobook_id, purchase_date
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
-                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to AND audiobook_id = $report->item_selected
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date";
+            $command = $connection->createCommand($query_1);
 
-            $command2 = $connection->createCommand("SELECT SUM(price) as total_sale
+            $query_2 = "SELECT SUM(price) as total_sale
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
-                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND genre = $report->refers_to AND audiobook_id = $report->item_selected
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date";
+            $command2 = $connection->createCommand($query_2);
         } else {
-            $command = $connection->createCommand("SELECT order_id, genre, price, cost, audiobook_id, purchase_date
+            $query_1 = "SELECT order_id, genre, price, cost, audiobook_id, purchase_date
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
-                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to AND audiobook_id = $report->item_selected
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date";
+            $command = $connection->createCommand($query_1);
 
-            $command2 = $connection->createCommand("SELECT SUM(price) as total_sale
+            $query_2 = "SELECT SUM(price) as total_sale
                                                    FROM audiobook INNER JOIN item_in_order INNER JOIN orders
-                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to
-                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+                                                   ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to AND audiobook_id = $report->item_selected
+                                                   WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date";
+            $command2 = $connection->createCommand($query_2);
 
-            $command3 = $connection->createCommand("SELECT SUM(cost) as total_cost
+            $query_3 = "SELECT SUM(cost) as total_cost
                                                     FROM audiobook INNER JOIN item_in_order INNER JOIN orders
-                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to
-                                                    WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date");
+                                                    ON audiobook.id = item_in_order.audiobook_id  AND orders.id = item_in_order.order_id AND audiobook.genre = $report->refers_to AND audiobook_id = $report->item_selected
+                                                    WHERE purchase_date >= $report->from_date AND purchase_date <= $report->to_date";
+            $command3 = $connection->createCommand($query_3);
         }
 
         $result = $command->queryAll();
@@ -87,6 +104,38 @@ class ReportController extends Controller
         if ($command3 != null) {
             $result3 = $command3->queryAll();
         }
+
+        Yii::$app->getSession()->setFlash('report_view_1', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Report Info 1',
+                   'message' => $query_1,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
+        Yii::$app->getSession()->setFlash('report_view_2', [
+                     'type' => 'success',
+                     'duration' => 5000,
+                     'icon' => 'glyphicon glyphicon-ok-sign',
+                     'title' => 'Report Info 2',
+                     'message' => $query_2,
+                     'positonY' => 'top',
+                     'positonX' => 'right'
+                    ]);
+        if ($query_3 != null) {
+            Yii::$app->getSession()->setFlash('report_view_3', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Report Info 3',
+                         'message' => $query_3,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+        }
+
 
         return $this->render('view', [
             'report' => $report,
@@ -110,6 +159,17 @@ class ReportController extends Controller
             $model->to_date = Yii::$app->formatter->asDate($model->to_date, 'php:U');
 
             if ($model->save()) {
+                $query = "INSERT INTO report VALUES($model->title, $model->description, $model->type, $model->from_date, $model->to_date, $model->refers_to, $model->item_selected)";
+                Yii::$app->getSession()->setFlash('report_view_3', [
+                             'type' => 'success',
+                             'duration' => 5000,
+                             'icon' => 'glyphicon glyphicon-ok-sign',
+                             'title' => 'Report Info',
+                             'message' => $query,
+                             'positonY' => 'top',
+                             'positonX' => 'right'
+                            ]);
+
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [

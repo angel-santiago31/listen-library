@@ -38,6 +38,17 @@ class AudiobookController extends Controller
         $searchModel = new AudiobookSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `audiobook`";
+        Yii::$app->getSession()->setFlash('audiobook_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Audiobook Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +62,17 @@ class AudiobookController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `audiobook` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('audiobook_view', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Audiobook Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,6 +88,17 @@ class AudiobookController extends Controller
         $model = new Audiobook();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO audiobook VALUES($model->title, $model->genre, $model->is_fiction, $model->author_id, $model->narrator_id, $model->length, $model->release_date, $model->publisher_id, $model->price, $model->cost, $model->picture, $model->picture2, $model->summary, $model->active)";
+            Yii::$app->getSession()->setFlash('audiobook_info_create', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Audiobook Create',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +118,17 @@ class AudiobookController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO audiobook VALUES($model->title, $model->genre, $model->is_fiction, $model->author_id, $model->narrator_id, $model->length, $model->release_date, $model->publisher_id, $model->price, $model->cost, $model->picture, $model->picture2, $model->summary, $model->active)";
+            Yii::$app->getSession()->setFlash('audiobook_info_update', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Audiobook Update',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -106,6 +150,17 @@ class AudiobookController extends Controller
          $model->active = 0;
          $model->save(false);
 
+         $query = "INSERT INTO audiobook (status) VALUES(0)";
+         Yii::$app->getSession()->setFlash('audiobook_deactivate', [
+                    'type' => 'success',
+                    'duration' => 5000,
+                    'icon' => 'glyphicon glyphicon-ok-sign',
+                    'title' => 'Audiobook Deactivate',
+                    'message' => $query,
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                   ]);
+
          return $this->redirect(['index']);
      }
 
@@ -114,6 +169,17 @@ class AudiobookController extends Controller
          $model = $this->findModel($id);
          $model->active = 10;
          $model->save(false);
+
+         $query = "INSERT INTO audiobook (status) VALUES(10)";
+         Yii::$app->getSession()->setFlash('audiobook_activate', [
+                    'type' => 'success',
+                    'duration' => 5000,
+                    'icon' => 'glyphicon glyphicon-ok-sign',
+                    'title' => 'Audiobook Activate',
+                    'message' => $query,
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                   ]);
 
          return $this->render('view', [
              'model' => $model,

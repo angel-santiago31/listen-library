@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\SignupForm;
+use kartik\growl\Growl;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -39,6 +40,17 @@ class CustomerController extends Controller
         $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `customer`";
+        Yii::$app->getSession()->setFlash('customer_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Customer Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -52,6 +64,17 @@ class CustomerController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `customer` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('customer_info', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Customer Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -67,6 +90,18 @@ class CustomerController extends Controller
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            $query = "INSERT INTO customer VALUES($model->first_name, $model->last_name, $model->initial,
+            $model->age, $model->email, $model->phone_number_1, $model->phone_number_2)";
+            Yii::$app->getSession()->setFlash('customer_info_create', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Customer Account Create',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['customer/index']);
         } else {
             return $this->render('create', [
@@ -89,6 +124,18 @@ class CustomerController extends Controller
             $model->setPassword($model->password_hash);
 
             if ($model->save()) {
+                $query = "INSERT INTO customer VALUES($model->first_name, $model->last_name, $model->initial,
+                $model->age, $model->email, $model->phone_number_1, $model->phone_number_2)";
+                Yii::$app->getSession()->setFlash('customer_info_update', [
+                             'type' => 'success',
+                             'duration' => 5000,
+                             'icon' => 'glyphicon glyphicon-ok-sign',
+                             'title' => 'Customer Account Details Update',
+                             'message' => $query,
+                             'positonY' => 'top',
+                             'positonX' => 'right'
+                            ]);
+
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
@@ -115,6 +162,17 @@ class CustomerController extends Controller
         $model->status = 0;
         $model->save(false);
 
+        $query = "INSERT INTO customer (status) VALUES(0)";
+        Yii::$app->getSession()->setFlash('customer_deactivate', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Customer Deactivate',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
+
         return $this->redirect(['index']);
     }
 
@@ -123,6 +181,17 @@ class CustomerController extends Controller
         $model = $this->findModel($id);
         $model->status = 10;
         $model->save(false);
+
+        $query = "INSERT INTO customer (status) VALUES(10)";
+        Yii::$app->getSession()->setFlash('customer_activate', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Customer Activate',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
 
         return $this->render('view', [
             'model' => $model,

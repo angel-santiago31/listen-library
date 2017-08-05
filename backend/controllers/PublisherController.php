@@ -38,6 +38,17 @@ class PublisherController extends Controller
         $searchModel = new PublisherSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `publisher`";
+        Yii::$app->getSession()->setFlash('publisher_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Publisher Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +62,17 @@ class PublisherController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `publisher` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('publisher_view', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Publisher Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,6 +88,17 @@ class PublisherController extends Controller
         $model = new Publisher();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO publisher VALUES($model->name)";
+            Yii::$app->getSession()->setFlash('publisher_info_create', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Publisher Create',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +118,17 @@ class PublisherController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO publisher VALUES($model->name)";
+            Yii::$app->getSession()->setFlash('publisher_info_update', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Publisher Update',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -101,6 +145,16 @@ class PublisherController extends Controller
      */
     public function actionDelete($id)
     {
+        Yii::$app->getSession()->setFlash('publisher_deactivate', [
+                   'type' => 'warning',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Publisher Deactivate',
+                   'message' => 'This function is currently not available.',
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
+
         return $this->redirect(['index']);
     }
 

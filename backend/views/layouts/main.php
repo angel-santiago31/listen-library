@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
+use kartik\growl\Growl;
 
 AppAsset::register($this);
 ?>
@@ -25,7 +26,25 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
+<?php foreach (Yii::$app->session->getAllFlashes() as $message):; ?>
+    <?php
+    echo Growl::widget([
+        'type' => (!empty($message['type'])) ? $message['type'] : 'danger',
+        'title' => (!empty($message['title'])) ? Html::encode($message['title']) : 'Title Not Set!',
+        'icon' => (!empty($message['icon'])) ? $message['icon'] : 'fa fa-info',
+        'body' => (!empty($message['message'])) ? Html::encode($message['message']) : 'Message Not Set!',
+        'showSeparator' => true,
+        'delay' => 1, //This delay is how long before the message shows
+        'pluginOptions' => [
+            'delay' => (!empty($message['duration'])) ? $message['duration'] : 3000, //This delay is how long the message shows for
+            'placement' => [
+                'from' => (!empty($message['positonY'])) ? $message['positonY'] : 'top',
+                'align' => (!empty($message['positonX'])) ? $message['positonX'] : 'right',
+            ]
+        ]
+    ]);
+    ?>
+<?php endforeach; ?>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -63,7 +82,7 @@ AppAsset::register($this);
                         'linkOptions' => ['style' => 'color: white']
                   ];
         $menuItems[] = ['label' => 'Orders', 'url' => ['/order/index'], 'linkOptions' => ['style' => 'color: white']];
-        $menuItems[] = ['label' => 'Reports', 'url' => ['/report/index'], 'linkOptions' => ['style' => 'color: white']];
+        //$menuItems[] = ['label' => 'Reports', 'url' => ['/report/index'], 'linkOptions' => ['style' => 'color: white']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

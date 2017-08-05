@@ -19,6 +19,7 @@ use backend\models\AudiobookSearch;
 use backend\models\Order;
 use backend\models\Contains;
 use common\models\Customer;
+use kartik\growl\Growl;
 
 /**
  * Site controller
@@ -82,8 +83,18 @@ class SiteController extends Controller
         $model = new Audiobook();
 
         if ($model->load(Yii::$app->request->post()) && $title == NULL) {
-            $query = "SELECT * FROM `audiobook` where `title` LIKE '%$model->title%' ";
+            $query = "SELECT * FROM `audiobook` WHERE `title` LIKE '%$model->title%' AND active = 10";
             $audiobookList = Audiobook::findBySql($query)->all();
+
+            Yii::$app->getSession()->setFlash('index_audiobooks_search', [
+                       'type' => 'success',
+                       'duration' => 5000,
+                       'icon' => 'glyphicon glyphicon-ok-sign',
+                       'title' => 'Search Bar',
+                       'message' => $query,
+                       'positonY' => 'top',
+                       'positonX' => 'right'
+                       ]);
 
             return $this->render('index', [
                'model' => $model,
@@ -92,6 +103,16 @@ class SiteController extends Controller
         }
 
         $audiobookList = Audiobook::find()->where(['active' => Audiobook::STATUS_ACTIVE])->all();
+        $query = "SELECT * FROM `audiobook` WHERE active = 10";
+        Yii::$app->getSession()->setFlash('index_audiobooks', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Default Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
 
         return $this->render('index', [
            'model' => $model,
@@ -176,6 +197,29 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
+                    $query = "INSERT INTO customer VALUES($model->first_name, $model->last_name, $model->initial,
+                    $model->age, $model->email, $model->phone_number_1, $model->phone_number_2)";
+                    Yii::$app->getSession()->setFlash('customer_signup_1', [
+                                 'type' => 'success',
+                                 'duration' => 5000,
+                                 'icon' => 'glyphicon glyphicon-ok-sign',
+                                 'title' => 'Customer Signup 1',
+                                 'message' => $query,
+                                 'positonY' => 'top',
+                                 'positonX' => 'right'
+                                ]);
+
+                    $query = "INSERT INTO credit_card VALUES($model->card_last_digits, $model->expiration_date, $model->card_type)";
+                    Yii::$app->getSession()->setFlash('customer_signup_2', [
+                                 'type' => 'success',
+                                 'duration' => 5000,
+                                 'icon' => 'glyphicon glyphicon-ok-sign',
+                                 'title' => 'Customer Signup 2',
+                                 'message' => $query,
+                                 'positonY' => 'top',
+                                 'positonX' => 'right'
+                                ]);
+
                     return $this->goHome();
                 }
             }
@@ -301,11 +345,33 @@ class SiteController extends Controller
             //asociate items to created order
             $positions = Yii::$app->cart->positions;
 
+            $query = "INSERT INTO order VALUES ($order->item_quantity, $order->status, $order->customer_id, $order->credit_card, $order->price_total)";
+            Yii::$app->getSession()->setFlash('order', [
+                       'type' => 'success',
+                       'duration' => 5000,
+                       'icon' => 'glyphicon glyphicon-ok-sign',
+                       'title' => 'Order Placed',
+                       'message' => $query,
+                       'positonY' => 'top',
+                       'positonX' => 'right'
+                      ]);
+
             foreach($positions as $position) {
                 $audiobook = new Contains();
                 $audiobook->order_id = $order->id;
                 $audiobook->audiobook_id = $position->id;
                 $audiobook->save(false);
+
+                $query = "INSERT INTO item_in_order VALUES($audiobook->order_id, $audiobook->audiobook_id, $audiobook->audiobook_id)";
+                Yii::$app->getSession()->setFlash('order_item', [
+                           'type' => 'success',
+                           'duration' => 5000,
+                           'icon' => 'glyphicon glyphicon-ok-sign',
+                           'title' => 'Order Item',
+                           'message' => $query,
+                           'positonY' => 'top',
+                           'positonX' => 'right'
+                          ]);
             }
 
             Yii::$app->cart->removeAll();
@@ -313,12 +379,33 @@ class SiteController extends Controller
             return $this->redirect(['site/view-order-details', 'id' => $order->id]);
         }
 
+        Yii::$app->getSession()->setFlash('order', [
+                   'type' => 'danger',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Error Message',
+                   'message' => 'A problem occured and your purchase did not went through.',
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
+
         return $this->redirect(['cart-view']);
     }
 
     public function actionViewOrderDetails($id)
     {
         $items_in_order = Contains::find()->where(['order_id' => $id])->all();
+
+        $query = "SELECT * FROM `item_in_order` WHERE `order_id`= $id";
+        Yii::$app->getSession()->setFlash('order_details', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Order Details',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
 
         return $this->render('view-order-details', [
             'model' => $this->findOrder($id),
@@ -328,6 +415,17 @@ class SiteController extends Controller
 
     public function actionViewItemDetails($id)
     {
+        $query = "SELECT * FROM `audiobook` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('view_item_details', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Order Details',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view-item-details', [
             'model' => $this->findAudiobook($id),
         ]);

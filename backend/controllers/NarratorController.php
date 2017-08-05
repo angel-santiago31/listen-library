@@ -38,6 +38,17 @@ class NarratorController extends Controller
         $searchModel = new NarratorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `narrator`";
+        Yii::$app->getSession()->setFlash('narrator_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Narrator Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +62,17 @@ class NarratorController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `narrator` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('narrator_view', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Narrator Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,6 +88,17 @@ class NarratorController extends Controller
         $model = new Narrator();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO narrator VALUES($model->name)";
+            Yii::$app->getSession()->setFlash('narrator_info_create', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Narrator Create',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +118,17 @@ class NarratorController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $query = "INSERT INTO narrator VALUES($model->name)";
+            Yii::$app->getSession()->setFlash('narrator_info_update', [
+                         'type' => 'success',
+                         'duration' => 5000,
+                         'icon' => 'glyphicon glyphicon-ok-sign',
+                         'title' => 'Narrator Update',
+                         'message' => $query,
+                         'positonY' => 'top',
+                         'positonX' => 'right'
+                        ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -101,6 +145,16 @@ class NarratorController extends Controller
      */
     public function actionDelete($id)
     {
+        Yii::$app->getSession()->setFlash('narrator_deactivate', [
+                   'type' => 'warning',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Narrator Deactivate',
+                   'message' => 'This function is currently not available.',
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                  ]);
+
         return $this->redirect(['index']);
     }
 

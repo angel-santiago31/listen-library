@@ -38,6 +38,17 @@ class AdminController extends Controller
         $searchModel = new AdminSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $query = "SELECT * FROM `admin`";
+        Yii::$app->getSession()->setFlash('admin_index', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Admin Index',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +62,17 @@ class AdminController extends Controller
      */
     public function actionView($id)
     {
+        $query = "SELECT * FROM `admin` WHERE `id`= $id";
+        Yii::$app->getSession()->setFlash('admin_view', [
+                   'type' => 'success',
+                   'duration' => 5000,
+                   'icon' => 'glyphicon glyphicon-ok-sign',
+                   'title' => 'Admin Info',
+                   'message' => $query,
+                   'positonY' => 'top',
+                   'positonX' => 'right'
+                   ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -71,6 +93,17 @@ class AdminController extends Controller
             $model->generatePasswordResetToken();
 
             if ($model->save()) {
+                $query = "INSERT INTO admin VALUES($model->email, $model->password_hash)";
+                Yii::$app->getSession()->setFlash('admin_info_create', [
+                             'type' => 'success',
+                             'duration' => 5000,
+                             'icon' => 'glyphicon glyphicon-ok-sign',
+                             'title' => 'Admin Account Create',
+                             'message' => $query,
+                             'positonY' => 'top',
+                             'positonX' => 'right'
+                            ]);
+
                 return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
@@ -95,6 +128,17 @@ class AdminController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          $query = "INSERT INTO admin VALUES($model->email, $model->password_hash)";
+          Yii::$app->getSession()->setFlash('admin_info_update', [
+                       'type' => 'success',
+                       'duration' => 5000,
+                       'icon' => 'glyphicon glyphicon-ok-sign',
+                       'title' => 'Admin Account Update',
+                       'message' => $query,
+                       'positonY' => 'top',
+                       'positonX' => 'right'
+                      ]);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -116,6 +160,17 @@ class AdminController extends Controller
          $model->status = 0;
          $model->save(false);
 
+         $query = "INSERT INTO admin (status) VALUES(0)";
+         Yii::$app->getSession()->setFlash('admin_deactivate', [
+                    'type' => 'success',
+                    'duration' => 5000,
+                    'icon' => 'glyphicon glyphicon-ok-sign',
+                    'title' => 'Admin Deactivate',
+                    'message' => $query,
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                   ]);
+
          return $this->redirect(['index']);
      }
 
@@ -124,6 +179,17 @@ class AdminController extends Controller
          $model = $this->findModel($id);
          $model->status = 10;
          $model->save(false);
+
+         $query = "INSERT INTO admin (status) VALUES(10)";
+         Yii::$app->getSession()->setFlash('admin_activate', [
+                    'type' => 'success',
+                    'duration' => 5000,
+                    'icon' => 'glyphicon glyphicon-ok-sign',
+                    'title' => 'Admin Activate',
+                    'message' => $query,
+                    'positonY' => 'top',
+                    'positonX' => 'right'
+                   ]);
 
          return $this->render('view', [
              'model' => $model,
